@@ -16,4 +16,4 @@ def selection_sort(arr):
     return arr
 
 
-print("Selection Sort: ", selection_sort(input))
+print("Selection sort: ", selection_sort(input))
