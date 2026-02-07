@@ -1,4 +1,4 @@
-input = [13, 46, 24, 52, 20, 9]
+arr = [13, 46, 24, 52, 20, 9]
 
 
 def selection_sort(arr):
