@@ -3,8 +3,17 @@ arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 class Node:
     def __init__(self, data, next=None):
-        self.data = data
-        self.next = next
+        self.__data = data
+        self.__next = next
+
+    def get_data(self):
+        return self.__data
+
+    def get_next(self):
+        return self.__next
+
+    def set_next(self, next):
+        self.__next = next
 
 
 class LinkedList:
@@ -25,12 +34,12 @@ class LinkedList:
         current_node = self.head
         current_position = 0
 
-        while current_node.next and current_position < position - 1:
-            current_node = current_node.next
+        while current_node.get_next() and current_position < position - 1:
+            current_node = current_node.get_next()
             current_position += 1
 
-        new_node.next = current_node.next
-        current_node.next = new_node
+        new_node.set_next(current_node.get_next())
+        current_node.set_next(new_node)
 
     def add_first(self, data):
         new_node = Node(data, self.head)
@@ -46,19 +55,19 @@ class LinkedList:
         current_node = self.head
         length = 0
 
-        while current_node.next:
-            current_node = current_node.next
+        while current_node.get_next():
+            current_node = current_node.get_next()
             length += 1
 
         mid = length // 2 if length % 2 == 0 else (length + 1) // 2
         current_node = self.head
 
         while mid > 1:
-            current_node = current_node.next
+            current_node = current_node.get_next()
             mid -= 1
 
-        new_node.next = current_node.next
-        current_node.next = new_node
+        new_node.set_next(current_node.get_next())
+        current_node.set_next(new_node)
 
     def add_last(self, data):
         new_node = Node(data)
@@ -68,32 +77,32 @@ class LinkedList:
             return
 
         current_node = self.head
-        while current_node.next:
-            current_node = current_node.next
-        current_node.next = new_node
+        while current_node.get_next():
+            current_node = current_node.get_next()
+        current_node.set_next(new_node)
 
     def remove(self, key):
         current_node = self.head
         previous_node = None
 
-        while current_node.next and current_node.data != key:
+        while current_node.get_next() and current_node.get_data() != key:
             previous_node = current_node
-            current_node = current_node.next
+            current_node = current_node.get_next()
 
-        if current_node.data != key:
+        if current_node.get_data() != key:
             return
 
         if not previous_node:
-            self.head = current_node.next  # Deleting the head node
+            self.head = current_node.get_next()  # Deleting the head node
         else:
-            previous_node.next = current_node.next  # Bypass the node to delete
+            previous_node.set_next(current_node.get_next())  # Bypass the node to delete
 
     def display(self):
         elements = []
         current_node = self.head
         while current_node:
-            elements.append(current_node.data)
-            current_node = current_node.next
+            elements.append(current_node.get_data())
+            current_node = current_node.get_next()
         print(" -> ".join(map(str, elements)))
 
 
