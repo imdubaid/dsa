@@ -100,10 +100,10 @@ class LinkedList:
             if next_node:
                 next_node.set_prev(prev_node)
 
-    def display(self, order=None):
+    def display(self, reverse=False):
         elements = []
 
-        if order == "reverse":
+        if reverse:
             current_node = self.head
 
             if not current_node:
@@ -124,14 +124,6 @@ class LinkedList:
 
         print(" <--> ".join(map(str, elements)))
 
-    def display(self):
-        elements = []
-        current_node = self.head
-        while current_node:
-            elements.append(current_node.get_data())
-            current_node = current_node.get_next()
-        print(" <--> ".join(map(str, elements)))
-
 
 linked_list = LinkedList()
 
@@ -143,3 +135,4 @@ linked_list.add_first(17)
 linked_list.add(15, 5)
 linked_list.remove(19)
 linked_list.display()
+linked_list.display(reverse=True)
