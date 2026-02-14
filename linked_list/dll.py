@@ -49,39 +49,21 @@ class LinkedList:
             self.add_last(data)
             return
 
-        new_node.set_next(current_node.get_next())
+        next_node = current_node.get_next()
+
         new_node.set_prev(current_node)
+        new_node.set_next(next_node)
+
         current_node.set_next(new_node)
+        next_node.set_prev(new_node)
 
     def add_first(self, data):
-        new_node = Node(data, next=self.head)
-        self.head.set_prev(new_node)
+        new_node = Node(data, prev=None, next=self.head)
+
+        if self.head:
+            self.head.set_prev(new_node)
+
         self.head = new_node
-
-    def add_middle(self, data):
-        new_node = Node(data)
-
-        if not self.head:
-            self.head = new_node
-            return
-
-        current_node = self.head
-        length = 0
-
-        while current_node.get_next():
-            current_node = current_node.get_next()
-            length += 1
-
-        mid = length // 2 if length % 2 == 0 else (length + 1) // 2
-        current_node = self.head
-
-        while mid > 1:
-            current_node = current_node.get_next()
-            mid -= 1
-
-        new_node.set_prev(current_node)
-        new_node.set_next(current_node.get_next())
-        current_node.set_next(new_node)
 
     def add_last(self, data):
         new_node = Node(data)
@@ -94,28 +76,53 @@ class LinkedList:
         while current_node.get_next():
             current_node = current_node.get_next()
 
-        new_node.set_prev(current_node)
         current_node.set_next(new_node)
+        new_node.set_prev(current_node)
 
     def remove(self, key):
         current_node = self.head
 
-        while current_node.get_next() and current_node.get_data() != key:
+        while current_node and current_node.get_data() != key:
             current_node = current_node.get_next()
 
-        if current_node.get_data() != key:
+        if not current_node:
             return
 
         prev_node = current_node.get_prev()
         next_node = current_node.get_next()
 
         if not prev_node:
-            self.head = current_node.get_next()
-            self.head.set_prev(current_node.get_prev())
+            self.head = next_node
+            if self.head:
+                self.head.set_prev(None)
         else:
             prev_node.set_next(next_node)
             if next_node:
                 next_node.set_prev(prev_node)
+
+    def display(self, order=None):
+        elements = []
+
+        if order == "reverse":
+            current_node = self.head
+
+            if not current_node:
+                print("")
+                return
+
+            while current_node.get_next():
+                current_node = current_node.get_next()
+
+            while current_node:
+                elements.append(current_node.get_data())
+                current_node = current_node.get_prev()
+        else:
+            current_node = self.head
+            while current_node:
+                elements.append(current_node.get_data())
+                current_node = current_node.get_next()
+
+        print(" <--> ".join(map(str, elements)))
 
     def display(self):
         elements = []
@@ -133,8 +140,6 @@ for num in arr:
 
 linked_list.add_first(7)
 linked_list.add_first(17)
-linked_list.add_middle(5)
-linked_list.add_middle(25)
 linked_list.add(15, 5)
 linked_list.remove(19)
 linked_list.display()

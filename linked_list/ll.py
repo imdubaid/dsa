@@ -23,6 +23,10 @@ class LinkedList:
     def add(self, data, position=None):
         new_node = Node(data)
 
+        if not self.head:
+            self.head = new_node
+            return
+
         if position is None:
             self.add_last(data)
             return
@@ -44,30 +48,6 @@ class LinkedList:
     def add_first(self, data):
         new_node = Node(data, self.head)
         self.head = new_node
-
-    def add_middle(self, data):
-        new_node = Node(data)
-
-        if not self.head:
-            self.head = new_node
-            return
-
-        current_node = self.head
-        length = 0
-
-        while current_node.get_next():
-            current_node = current_node.get_next()
-            length += 1
-
-        mid = length // 2 if length % 2 == 0 else (length + 1) // 2
-        current_node = self.head
-
-        while mid > 1:
-            current_node = current_node.get_next()
-            mid -= 1
-
-        new_node.set_next(current_node.get_next())
-        current_node.set_next(new_node)
 
     def add_last(self, data):
         new_node = Node(data)
@@ -113,7 +93,5 @@ for num in arr:
 
 linked_list.add_first(7)
 linked_list.add_first(17)
-linked_list.add_middle(5)
-linked_list.add_middle(25)
 linked_list.remove(9)
 linked_list.display()
