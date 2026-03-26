@@ -29,7 +29,18 @@ print("Better one: ", better(arr))
 
 
 def optimal(arr):
-    pass
+    if len(arr) < 2:
+        return 0
+
+    largest = float("-inf")
+    second_largest = float("-inf")
+
+    for elem in arr:
+        if elem > largest:
+            second_largest = largest
+            largest = elem
+
+    return second_largest
 
 
 print("Optimal one: ", optimal(arr))
